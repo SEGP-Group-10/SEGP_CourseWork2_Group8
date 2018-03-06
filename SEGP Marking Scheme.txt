@@ -1,0 +1,19 @@
+Client End (grading factor) :
+
+Completeness and Correctness (20)	
+Usability & GUI (7)	
+Satisfaction with the Product (6)	
+Total (Scaled to 20)	
+
+Mentor End (grading factor) :
+
+Requirements Document (10)	
+Code quality (5) (Comments, Layout)	 
+Functionality (20) (Completeness against the Requirements document)	
+Processes (5) (GitLab use, commits)	
+Testing (10) (Unit, System, Acceptance)	
+Team Work (10) (Minutes, attendance and contribution)
+Performance Weightage	
+
+Grand Total (Out of 80)	
+Percentage
