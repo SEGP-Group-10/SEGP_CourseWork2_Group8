@@ -20,6 +20,15 @@ public class Massage implements Serializable {
         this.imageData = imageData;
     }
 
+    public Massage(long massageId, String senderNo, String receiverNo, Timestamp timeStamp, String textData, byte[] imageData) {
+        this.massageId = massageId;
+        this.senderNo = senderNo;
+        this.receiverNo = receiverNo;
+        this.timeStamp = timeStamp;
+        this.textData = textData;
+        this.imageData = imageData;
+    }
+
     public long getMassageId() {
         return massageId;
     }

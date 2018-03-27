@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseManager {
 
@@ -117,6 +118,24 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return true;
+    }
+
+    public ArrayList<Massage> getMassagesList(String senderNo, String recNo) {
+        ArrayList<Massage> massagesList = null;
+        try {
+            massagesList = new ArrayList<Massage>();
+            rs = st.executeQuery("select * from massages where sender_no='" + senderNo + "' &&" + "receiver_no='" + recNo + "'");
+
+            while (rs.next()) {
+                massagesList.add(new Massage(rs.getLong("massage_id"),rs.getString("sender_no"),rs.getString("receiver_no"),rs.getTimestamp("time_stamp"),rs.getString("text_data"),rs.getBytes("image_data")));
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            return massagesList;
+        }
     }
 
 
