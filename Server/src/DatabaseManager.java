@@ -1,3 +1,6 @@
+import com.example.muzammil.prolife.commclasses.Massage;
+import com.example.muzammil.prolife.commclasses.SignUp;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -14,7 +17,7 @@ public class DatabaseManager {
     synchronized void createConnection() {
         try {
             if(conn==null || conn.isClosed() ){
-                conn = DriverManager.getConnection(connectionString, "root", "");
+                conn = DriverManager.getConnection(connectionString, "root", "root");
                 st = conn.createStatement();
             }
         } catch (SQLException e) {
@@ -26,23 +29,22 @@ public class DatabaseManager {
     public boolean addNewUser(SignUp signup){
         //createConnection();
         try {
-            System.out.println(""+signup.getUserNo());
+          //  System.out.println(""+signup.getUserNo());
             if(isUserNoValid(signup.getUserNo())) {
-                String sql="insert into users(user_no,password,first_name,last_name,img,status) values(?,?,?,?,?,?)";
+                String sql= "insert into users(user_no,password,user_name,img,status) values(?,?,?,?,?)";
                 PreparedStatement pst=conn.prepareStatement(sql);
 
                 String userNo=signup.getUserNo();
                 String password=signup.getPassword();
-                String firstName=signup.getFirstName();
-                String lastName=signup.getLastName();
+                String name=signup.getName();
                 String status=signup.getStatus();
 
                 pst.setString(1,userNo);
                 pst.setString(2, password);
-                pst.setString(3, firstName);
-                pst.setString(4, lastName);
-                pst.setBytes(5, signup.getImage());
-                pst.setString(6, status);
+                pst.setString(3, name);
+                pst.setBytes(4, signup.getImage());
+                pst.setString(5, status);
+
                 pst.executeUpdate();
 
                 return true;
@@ -59,7 +61,7 @@ public class DatabaseManager {
     public boolean getUserSignIn(SignIn signIn){
         //createConnection();
         try {
-            System.out.println(""+signIn.getUserNo());
+          //  System.out.println(""+signIn.getUserNo());
 
             rs=st.executeQuery("select * from users where user_no='"+signIn.getUserNo()+"'");
             rs.next();
@@ -91,7 +93,7 @@ public class DatabaseManager {
 
             pst.setString(1,senderNo);
             pst.setString(2,receiverNo);
-           // pst.setLong(3,timeStamp);
+            // pst.setLong(3,timeStamp);
             pst.setString(3,textData);
             pst.setBytes(4,imgData);
             pst.executeUpdate();
@@ -101,7 +103,7 @@ public class DatabaseManager {
             return false;
         }
 
-     //   return false;
+        //   return false;
     }
 
     public boolean isUserNoValid(String userNo){
