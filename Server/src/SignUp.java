@@ -3,6 +3,7 @@ import java.io.Serializable;
 public class SignUp implements Serializable {
 
     private String userNo;
+    private String password;
     private String firstName;
     private String lastName;
     private byte[] image;
@@ -11,8 +12,9 @@ public class SignUp implements Serializable {
     public SignUp() {
     }
 
-    public SignUp(String userNo, String firstName, String lastName, byte[] image, String status) {
+    public SignUp(String userNo, String password, String firstName, String lastName, byte[] image, String status) {
         this.userNo = userNo;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.image = image;
@@ -25,6 +27,14 @@ public class SignUp implements Serializable {
 
     public void setUserNo(String userNo) {
         this.userNo = userNo;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {

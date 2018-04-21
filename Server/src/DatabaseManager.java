@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseManager {
 
@@ -27,25 +28,48 @@ public class DatabaseManager {
         try {
             System.out.println(""+signup.getUserNo());
             if(isUserNoValid(signup.getUserNo())) {
-                String sql="insert into users(user_no,first_name,last_name,img,status) values(?,?,?,?,?)"	;
+                String sql="insert into users(user_no,password,first_name,last_name,img,status) values(?,?,?,?,?,?)";
                 PreparedStatement pst=conn.prepareStatement(sql);
 
                 String userNo=signup.getUserNo();
+                String password=signup.getPassword();
                 String firstName=signup.getFirstName();
                 String lastName=signup.getLastName();
                 String status=signup.getStatus();
 
                 pst.setString(1,userNo);
-                pst.setString(2, firstName);
-                pst.setString(3, lastName);
-                pst.setBytes(4, signup.getImage());
-                pst.setString(5, status);
+                pst.setString(2, password);
+                pst.setString(3, firstName);
+                pst.setString(4, lastName);
+                pst.setBytes(5, signup.getImage());
+                pst.setString(6, status);
                 pst.executeUpdate();
 
                 return true;
             }
             else
                 return false;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean getUserSignIn(SignIn signIn){
+        //createConnection();
+        try {
+            System.out.println(""+signIn.getUserNo());
+
+            rs=st.executeQuery("select * from users where user_no='"+signIn.getUserNo()+"'");
+            rs.next();
+            if(rs.getString(1).equals(signIn.getUserNo()) && rs.getString(2).equals(signIn.getPassword())){
+                return true;
+            }
+            else {
+                return false;
+            }
+
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -94,6 +118,24 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         return true;
+    }
+
+    public ArrayList<Massage> getMassagesList(String senderNo, String recNo) {
+        ArrayList<Massage> massagesList = null;
+        try {
+            massagesList = new ArrayList<Massage>();
+            rs = st.executeQuery("select * from massages where sender_no='" + senderNo + "' &&" + "receiver_no='" + recNo + "'");
+
+            while (rs.next()) {
+                massagesList.add(new Massage(rs.getLong("massage_id"),rs.getString("sender_no"),rs.getString("receiver_no"),rs.getTimestamp("time_stamp"),rs.getString("text_data"),rs.getBytes("image_data")));
+            }
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            return massagesList;
+        }
     }
 
 
